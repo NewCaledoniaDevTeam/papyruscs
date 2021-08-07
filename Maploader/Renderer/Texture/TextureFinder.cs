@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -231,6 +231,7 @@ namespace Maploader.Renderer.Texture
         public TextureStack FindTexturePath(string name, Dictionary<string, Object> data, int x, int z, int y)
         {
             name = name.Replace("minecraft:", "");
+            name = name.Replace("cc:", "");
 
             var newTexture = GetSubstitution(name, data, x, z, y);
 
@@ -262,6 +263,24 @@ namespace Maploader.Renderer.Texture
             // oh look at all this mess...
             switch (name)
             {
+                //Compressed Cobblestone Mod
+                case "cc_1":
+                    return "textures/blocks/cc_1";
+                case "cc_2":
+                    return "textures/blocks/cc_2";
+                case "cc_3":
+                    return "textures/blocks/cc_3";
+                case "cc_4":
+                    return "textures/blocks/cc_4";
+                case "cc_5":
+                    return "textures/blocks/cc_5";
+                case "cc_6":
+                    return "textures/blocks/cc_6";
+                case "cc_7":
+                    return "textures/blocks/cc_7";
+                case "cc_8":
+                    return "textures/blocks/cc_8";
+
                 case "cobblestone_wall":
                     return RenderWall(data, "cobblestone_wall");
 
