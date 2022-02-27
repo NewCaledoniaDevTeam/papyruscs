@@ -1,0 +1,51 @@
+name: .NET Build
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+           access_token: ${{ github.token }}
+        
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+         dotnet-version: 3.0.x
+      - name: Build
+        run: dotnet publish PapyrusCs -c Release --self-contained --runtime win-x64
+        
+      - uses: vimtor/action-zip@v1
+        with:
+          files: build/
+          dest: PapyrusCs - ${{ steps.build-number.outputs.BUILD_NUMBER }}.zip
+      - name: Upload .zip as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: PapyrusCs - ${{ steps.build-number.outputs.BUILD_NUMBER }}.zip
+          path: PapyrusCs - ${{ steps.build-number.outputs.BUILD_NUMBER }}.zip
+          if-no-files-found: error
+        
+      - name: Calculate build number
+        id: build-number
+        run: |
+          BUILD_NUMBER=$(($GITHUB_RUN_NUMBER)) #to stay above jenkins
+          echo "Build number: $BUILD_NUMBER"
+          echo ::set-output name=BUILD_NUMBER::$BUILD_NUMBER
+          
+      - name: Puts the release on GitHub
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: ""
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ steps.build-number.outputs.BUILD_NUMBER }}
+          name: PapyrusCs - ${{ steps.build-number.outputs.BUILD_NUMBER }}
+          prerelease: true
+
