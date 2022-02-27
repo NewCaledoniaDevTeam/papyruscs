@@ -254,6 +254,7 @@ namespace Maploader.Renderer.Texture
         public TextureStack FindTexturePath(string name, Dictionary<string, Object> data, int x, int z, int y)
         {
             name = name.Replace("minecraft:", "");
+            name = name.Replace("cc:", "");
 
             var newTexture = GetSubstitution(name, data, x, z, y);
 
@@ -285,6 +286,24 @@ namespace Maploader.Renderer.Texture
             // oh look at all this mess...
             switch (name)
             {
+                //Compressed Cobblestone Mod
+                case "cc_1":
+                    return "textures/blocks/cc_1";
+                case "cc_2":
+                    return "textures/blocks/cc_2";
+                case "cc_3":
+                    return "textures/blocks/cc_3";
+                case "cc_4":
+                    return "textures/blocks/cc_4";
+                case "cc_5":
+                    return "textures/blocks/cc_5";
+                case "cc_6":
+                    return "textures/blocks/cc_6";
+                case "cc_7":
+                    return "textures/blocks/cc_7";
+                case "cc_8":
+                    return "textures/blocks/cc_8";
+
                 case "cobblestone_wall":
                     return RenderWall(data, "cobblestone_wall");
 
@@ -370,11 +389,11 @@ namespace Maploader.Renderer.Texture
                 case "smooth_red_sandstone_stairs":
                     return GetTexture("smooth_red_sandstone");
                 case "purpur_stairs":
-                    return GetTexture("purpur_block_top");   
+                    return GetTexture("purpur_block_top");
                 case "red_nether_brick_stairs":
-                    return GetTexture("red_nether_brick");   
+                    return GetTexture("red_nether_brick");
                 case "end_brick_stairs":
-                    return GetTexture("end_bricks", data);   
+                    return GetTexture("end_bricks", data);
                 case "smooth_quartz_stairs":
                     return GetTexture("stair_smooth_quartz_block", data);
 
@@ -610,15 +629,16 @@ namespace Maploader.Renderer.Texture
                     return GetTexture("seagrass_carried", data);
                 case "tallgrass":
                     return GetTexture("tallgrass_carried", data);
-
                 case "grass_path":
                     return GetTexture("grass_path_top", data);
+
                 case "lit_pumpkin":
                     return GetTexture("pumpkin_top", data);
                 case "pumpkin":
                     return GetTexture("pumpkin_top", data);
                 case "carved_pumpkin":
                     return GetTexture("pumpkin_top", data);
+
                 case "torch":
                     // Intentional fall-through
                 case "underwater_torch":
@@ -631,8 +651,6 @@ namespace Maploader.Renderer.Texture
                     return GetTexture("crafting_table_top", data);
                 case "brick_block":
                     return GetTexture("brick", data);
-
-
                 case "chest":
                     return GetTexture("chest_inventory_top", data);
                 case "snow_layer":
@@ -652,7 +670,7 @@ namespace Maploader.Renderer.Texture
                 case "kelp":
                     return GetTexture("kelp_top", data);
                 case "dried_kelp_block":
-                    return GetTexture("dried_kelp_block_top", data);                
+                    return GetTexture("dried_kelp_block_top", data);
                 case "stained_hardened_clay":
                     return GetTexture("stained_clay", data);
 
@@ -694,6 +712,7 @@ namespace Maploader.Renderer.Texture
                     return RenderButton(data, "birch_planks");
                 case "jungle_button":
                     return RenderButton(data, "jungle_planks");
+
                 case "wall_banner":
                     return RenderWallBanner("sign", data);
                 case "standing_banner":
@@ -735,7 +754,6 @@ namespace Maploader.Renderer.Texture
 
                 case "seaLantern":
                     return GetTexture("sea_lantern", data);
-
                 case "purpur_block":
                 {
                     switch ((string)data.GetValueOrDefault("chisel_type", "default"))
@@ -754,8 +772,7 @@ namespace Maploader.Renderer.Texture
                 case "powered_comparator":
                     return RenderComparator(true, data);
                 case "unpowered_comparator":
-                    return RenderComparator(false, data);
-
+                    return GetTexture("comparator_up", data);
                 case "pistonArmCollision":
                 return GetTexture("piston_top_normal", data);
                 case "piston":
@@ -778,6 +795,7 @@ namespace Maploader.Renderer.Texture
                     return GetTexture("cartography_table_top", data);
                 case "fletching_table":
                     return GetTexture("fletching_table_top", data);
+
                 case "redstone_lamp":
                     return GetTexture("redstone_lamp_off", data);
                 case "lit_redstone_lamp":
@@ -792,7 +810,6 @@ namespace Maploader.Renderer.Texture
                 case "sandstone":
                     // sand_stone_type makes no difference to top
                     return GetTexture("sandstone_top", data);
-
                 case "stone_slab":
                 case "double_stone_slab":
                     return GetTexture("stone_slab_top", StoneSlabIndexes[1][(string)data["stone_slab_type"]]);
@@ -829,9 +846,9 @@ namespace Maploader.Renderer.Texture
 
                 case "trapped_chest":
                     return GetTexture("chest_inventory_top", data);
+
                 case "polished_diorite_stairs":
                     return GetTexture("polished_diorite", data);
-
                 case "polished_andesite_stairs":
                     return GetTexture("polished_andesite", data);
                 case "polished_granite_stairs":
@@ -842,6 +859,7 @@ namespace Maploader.Renderer.Texture
                     return GetTexture("andesite", data);
                 case "granite_stairs":
                     return GetTexture("granite", data);
+
                 /* LEAVES */
                 case "leaves":
                 {
@@ -2139,7 +2157,7 @@ namespace Maploader.Renderer.Texture
                 {
                     graphics.RotateFlip(b, info.Rotation);
                 }
-                
+
                 if (!Cache.ContainsKey(info))
                 {
                     Cache.Add(info, b);
